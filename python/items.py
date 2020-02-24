@@ -30,9 +30,6 @@ class DefaultItem(Item):
     DEFAULT_QUALITY_DELTA = 1
     DELTA_MULTIPLICATION_ONCE_EXPIRED = 2
 
-    def __init__(self, name, sell_in, quality):
-        super().__init__(name, sell_in, quality)
-
     def update_items(self):
         self.update_sell_in()
         self.update_quality()
@@ -72,9 +69,6 @@ class Brie(DefaultItem):
 
     QUALITY_DELTA_PROCESSING_TYPE = QualityDeltaProcessingType.add
 
-    def __init__(self, name, sell_in, quality):
-        super().__init__(name, sell_in, quality)
-
 
 class Sulfuras(DefaultItem):
     def update_sell_in(self):
@@ -87,9 +81,6 @@ class Sulfuras(DefaultItem):
 class Backstage(DefaultItem):
 
     QUALITY_DELTA_PROCESSING_TYPE = QualityDeltaProcessingType.add
-
-    def __init__(self, name, sell_in, quality):
-        super().__init__(name, sell_in, quality)
 
     def update_quality(self):
 
@@ -116,6 +107,3 @@ class Conjured(DefaultItem):
 
     QUALITY_DELTA_PROCESSING_TYPE = QualityDeltaProcessingType.subtract
     DEFAULT_QUALITY_DELTA = 2 * DefaultItem.DEFAULT_QUALITY_DELTA
-
-    def __init__(self, name, sell_in, quality):
-        super().__init__(name, sell_in, quality)
