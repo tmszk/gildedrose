@@ -16,7 +16,7 @@ def create_item(name, sell_in, quality):
         return DefaultItem(name, sell_in, quality)
 
 
-class QualityDeltaProcessingType(Enum):  # Values not needed
+class QualityDeltaProcessingType(Enum):
     add = auto()
     subtract = auto()
 
