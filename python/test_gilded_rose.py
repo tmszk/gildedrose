@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from gilded_rose import Item, GildedRose
-from items import create_item, QualityDeltaType
+from gilded_rose import GildedRose
+from items import create_item, QualityDeltaProcessingType
 
 
 class GildedRoseTest(unittest.TestCase):
@@ -14,28 +14,28 @@ class GildedRoseTest(unittest.TestCase):
 
     def test_increase_quality(self):
         items = [create_item("foo", 10, 20)]
-        items[0].QUALITY_DELTA_PROCESSING_TYPE = QualityDeltaType.add
+        items[0].QUALITY_DELTA_PROCESSING_TYPE = QualityDeltaProcessingType.add
         gilded_rose = GildedRose(items)
         gilded_rose.update_items()
         self.assertEqual(21, items[0].quality)
 
     def test_decrease_quality(self):
         items = [create_item("foo", 10, 20)]
-        items[0].quality_delta_type = QualityDeltaType.subtract
+        items[0].quality_delta_type = QualityDeltaProcessingType.subtract
         gilded_rose = GildedRose(items)
         gilded_rose.update_items()
         self.assertEqual(19, items[0].quality)
 
     def test_decrease_quality_once_expired(self):
         items = [create_item("foo", 0, 20)]
-        items[0].quality_delta_type = QualityDeltaType.subtract
+        items[0].quality_delta_type = QualityDeltaProcessingType.subtract
         gilded_rose = GildedRose(items)
         gilded_rose.update_items()
         self.assertEqual(18, items[0].quality)
 
     def test_decrease_sell_in(self):
         items = [create_item("foo", 10, 20)]
-        items[0].quality_delta_type = QualityDeltaType.subtract
+        items[0].quality_delta_type = QualityDeltaProcessingType.subtract
         gilded_rose = GildedRose(items)
         gilded_rose.update_items()
         self.assertEqual(9, items[0].sell_in)

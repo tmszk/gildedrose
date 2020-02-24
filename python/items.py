@@ -16,7 +16,7 @@ def create_item(name, sell_in, quality):
         return DefaultItem(name, sell_in, quality)
 
 
-class QualityDeltaType(Enum):  # Values not needed
+class QualityDeltaProcessingType(Enum):  # Values not needed
     add = auto()
     subtract = auto()
 
@@ -26,7 +26,7 @@ class DefaultItem(Item):
     MINIMUM_QUALITY = 0
     MAXIMUM_QUALITY = 50
 
-    QUALITY_DELTA_PROCESSING_TYPE = QualityDeltaType.subtract
+    QUALITY_DELTA_PROCESSING_TYPE = QualityDeltaProcessingType.subtract
     DEFAULT_QUALITY_DELTA = 1
     DELTA_MULTIPLICATION_ONCE_EXPIRED = 2
 
@@ -45,14 +45,14 @@ class DefaultItem(Item):
 
         quality_delta = self.calculate_quality_delta()
 
-        if self.QUALITY_DELTA_PROCESSING_TYPE == QualityDeltaType.add:
+        if self.QUALITY_DELTA_PROCESSING_TYPE == QualityDeltaProcessingType.add:
             self.quality += quality_delta
             self.check_quality_limits(min, self.MAXIMUM_QUALITY)
-        elif self.QUALITY_DELTA_PROCESSING_TYPE == QualityDeltaType.subtract:
+        elif self.QUALITY_DELTA_PROCESSING_TYPE == QualityDeltaProcessingType.subtract:
             self.quality -= quality_delta
             self.check_quality_limits(max, self.MINIMUM_QUALITY)
         else:
-            raise Exception(f"'{self.quality_delta_type}' is unrecognized as delta processing type for quality")
+            raise Exception(f"'{self.QUALITY_DELTA_PROCESSING_TYPE}' is unrecognized as delta processing type for quality")
 
     def calculate_quality_delta(self):
 
@@ -70,7 +70,7 @@ class DefaultItem(Item):
 
 class Brie(DefaultItem):
 
-    QUALITY_DELTA_PROCESSING_TYPE = QualityDeltaType.add
+    QUALITY_DELTA_PROCESSING_TYPE = QualityDeltaProcessingType.add
 
     def __init__(self, name, sell_in, quality):
         super().__init__(name, sell_in, quality)
@@ -86,7 +86,7 @@ class Sulfuras(DefaultItem):
 
 class Backstage(DefaultItem):
 
-    QUALITY_DELTA_PROCESSING_TYPE = QualityDeltaType.add
+    QUALITY_DELTA_PROCESSING_TYPE = QualityDeltaProcessingType.add
 
     def __init__(self, name, sell_in, quality):
         super().__init__(name, sell_in, quality)
@@ -114,8 +114,8 @@ class Backstage(DefaultItem):
 
 class Conjured(DefaultItem):
 
-    QUALITY_DELTA_PROCESSING_TYPE = QualityDeltaType.subtract
-    DEFAULT_QUALITY_DELTA = 2
+    QUALITY_DELTA_PROCESSING_TYPE = QualityDeltaProcessingType.subtract
+    DEFAULT_QUALITY_DELTA = 2 * DefaultItem.DEFAULT_QUALITY_DELTA
 
     def __init__(self, name, sell_in, quality):
         super().__init__(name, sell_in, quality)
